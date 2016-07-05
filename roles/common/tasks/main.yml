@@ -19,13 +19,25 @@
 - name: Setting zsh as default shell
   user: name={{ devuser }} shell=/bin/zsh
 
-- name: Checking for .vim directory
-  stat: path=/home/{{ devuser }}/.vim/autoload
-  register: vimfound
+# - name: Checking for .vim directory
+  # stat: path=/home/{{ devuser }}/.vim/autoload
+  # register: vimfound
 
-- name: Making .vim directory if it doesn't exist
+# - name: Making .vim directory if it doesn't exist
+  # become_user: "{{ devuser }}"
+  # shell: mkdir -p ~/.vim/autoload
+
+- name: Making .vim/autoload directory if it doesn't exist
   become_user: "{{ devuser }}"
-  shell: mkdir -p ~/.vim/autoload
+  files: path=~/.vim/autoload state=directory
+
+- name: Making .vim/tmp directory if it doesn't exist
+  become_user: "{{ devuser }}"
+  files: path=~/.vim/tmp state=directory
+
+- name: Making .vim/backup directory if it doesn't exist
+  become_user: "{{ devuser }}"
+  files: path=~/.vim/backup state=directory
 
 - name: Adding vim-plug package manager
   become_user: "{{ devuser }}"
