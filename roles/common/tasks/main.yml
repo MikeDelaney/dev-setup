@@ -54,6 +54,7 @@
   when: found.stat.exists
 
 - name: Symlink dotfiles
+  become_user: "{{ devuser }}"
   file: path=/home/{{ devuser }}/{{ item }} src=/home/{{ devuser }}/dotfiles/{{ item }} state=link
   with_items:
     - .bashrc
@@ -61,6 +62,7 @@
     - .bash
 
 - name: Symlink nested dotfiles
+  become_user: "{{ devuser }}"
   file: path=/home/{{ devuser }}/{{ item.name }} src=/home/{{ devuser }}/dotfiles/{{ item.dirname }}/{{ item.name }} state=link
   with_items:
     - { dirname: 'git', name: '.gitconfig' }
