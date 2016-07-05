@@ -1,0 +1,70 @@
+---
+- name: Install virtualenv
+  pip: name={{ item }}
+  with_items:
+    - virtualenv
+    - virtualenvwrapper
+        
+- name: Cloning oh-my-zsh repo
+  become_user: "{{ devuser }}"
+  git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/{{ devuser }}/.oh-my-zsh
+
+- name: Creating new .zshrc
+  become_user: "{{ devuser }}"
+  copy:
+    src=/home/{{ devuser }}/.oh-my-zsh/templates/zshrc.zsh-template
+    dest=/home/{{ devuser }}/.zshrc
+    backup=yes
+
+- name: Setting zsh as default shell
+  user: name={{ devuser }} shell=/bin/zsh
+
+- name: Checking for .vim directory
+  stat: path=/home/{{ devuser }}/.vim/autoload
+  register: vimfound
+
+- name: Making .vim directory if it doesn't exist
+  become_user: "{{ devuser }}"
+  shell: mkdir -p ~/.vim/autoload
+
+- name: Adding vim-plug package manager
+  become_user: "{{ devuser }}"
+  get_url: 
+    url=https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest=/home/{{ devuser }}/.vim/autoload/plug.vim
+    backup=yes
+
+- name: Adding vim solarized repo
+  become_user: "{{ devuser }}"
+  git:
+    repo=https://github.com/altercation/vim-colors-solarized.git
+    dest=/home/{{ devuser }}/.vim/plugged
+
+- name: Cloning dotfiles
+  git:
+    repo=https://github.com/MikeDelaney/dotfiles.git
+    dest=/home/{{ devuser }}/dotfiles
+
+- name: Checking for existing .bashrc
+  stat: path=/home/{{ devuser }}/.bashrc
+  register: found
+
+- name: Backing up .bashrc if it exists
+  command: mv /home/{{ devuser }}/.bashrc /home/{{ devuser }}/.bashrc.orig
+  when: found.stat.exists
+
+- name: Symlink dotfiles
+  file: path=/home/{{ devuser }}/{{ item }} src=/home/{{ devuser }}/dotfiles/{{ item }} state=link
+  with_items:
+    - .bashrc
+    - .vimrc
+    - .bash
+
+- name: Symlink nested dotfiles
+  file: path=/home/{{ devuser }}/{{ item.name }} src=/home/{{ devuser }}/dotfiles/{{ item.dirname }}/{{ item.name }} state=link
+  with_items:
+    - { dirname: 'git', name: '.gitconfig' }
+    - { dirname: 'git', name: '.gitignore_global' }
+    - { dirname: 'git', name: '.git-completion.sh' }
+    - { dirname: 'git', name: '.git-prompt.sh' }
+ 

@@ -1,0 +1,7 @@
+---
+- hosts: dev_env
+  become: yes
+  roles:
+    - { role: ubuntu, when: "ansible_distribution == 'Ubuntu'" }
+    - { role: mac, when: "ansible_os_family == 'Darwin'" }
+    - common
