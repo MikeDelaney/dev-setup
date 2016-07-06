@@ -5,15 +5,25 @@
     - virtualenv
     - virtualenvwrapper
         
+- name: Setting home directory for Mac
+  set_fact:
+    homedir: /Users/{{ devuser }}
+  when: ansible_os_family == "Darwin"
+
+- name: Setting home directory for Ubuntu
+  set_fact:
+    homedir: /home/{{ devuser }}
+  when: ansible_distribution == "Ubuntu"
+
 - name: Cloning oh-my-zsh repo
   become_user: "{{ devuser }}"
-  git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/{{ devuser }}/.oh-my-zsh
+  git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest={{ homedir }}/.oh-my-zsh
 
 - name: Creating new .zshrc
   become_user: "{{ devuser }}"
   copy:
-    src=/home/{{ devuser }}/.oh-my-zsh/templates/zshrc.zsh-template
-    dest=/home/{{ devuser }}/.zshrc
+    src={{ homedir }}/.oh-my-zsh/templates/zshrc.zsh-template
+    dest={{ homedir }}/.zshrc
     backup=yes
 
 - name: Setting zsh as default shell
@@ -43,31 +53,31 @@
   become_user: "{{ devuser }}"
   get_url: 
     url=https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    dest=/home/{{ devuser }}/.vim/autoload/plug.vim
+    dest={{ homedir }}/.vim/autoload/plug.vim
     backup=yes
 
 - name: Adding vim solarized repo
   become_user: "{{ devuser }}"
   git:
     repo=https://github.com/altercation/vim-colors-solarized.git
-    dest=/home/{{ devuser }}/.vim/plugged
+    dest={{ homedir }}/.vim/plugged
 
 - name: Cloning dotfiles
   git:
     repo=https://github.com/MikeDelaney/dotfiles.git
-    dest=/home/{{ devuser }}/dotfiles
+    dest={{ homedir }}/dotfiles
 
 - name: Checking for existing .bashrc
-  stat: path=/home/{{ devuser }}/.bashrc
+  stat: path={{ homedir }}/.bashrc
   register: found
 
 - name: Backing up .bashrc if it exists
-  command: mv /home/{{ devuser }}/.bashrc /home/{{ devuser }}/.bashrc.orig
-  when: found.stat.exists
+  command: mv {{ homedir }}/.bashrc {{ homedir }}/.bashrc.orig
+  when: found.stat.exists and ansible_distribution == "Ubuntu"
 
 - name: Symlink dotfiles
   become_user: "{{ devuser }}"
-  file: path=/home/{{ devuser }}/{{ item }} src=/home/{{ devuser }}/dotfiles/{{ item }} state=link
+  file: path={{ homedir }}/{{ item }} src={{ homedir }}/dotfiles/{{ item }} state=link
   with_items:
     - .bashrc
     - .vimrc
@@ -75,7 +85,7 @@
 
 - name: Symlink nested dotfiles
   become_user: "{{ devuser }}"
-  file: path=/home/{{ devuser }}/{{ item.name }} src=/home/{{ devuser }}/dotfiles/{{ item.dirname }}/{{ item.name }} state=link
+  file: path={{ homedir }}/{{ item.name }} src={{ homedir }}/dotfiles/{{ item.dirname }}/{{ item.name }} state=link
   with_items:
     - { dirname: 'git', name: '.gitconfig' }
     - { dirname: 'git', name: '.gitignore_global' }
