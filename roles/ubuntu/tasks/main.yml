@@ -6,6 +6,7 @@
     - python-pip
     - python-dev
     - libpq-dev
+    - libsnappy-dev
     - zsh
     - byobu
 
