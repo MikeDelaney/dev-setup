@@ -9,4 +9,5 @@
     - libsnappy-dev
     - zsh
     - byobu
+    - htop
 
