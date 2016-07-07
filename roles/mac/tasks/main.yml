@@ -9,6 +9,7 @@
     - snappy
     - zsh
     - byobu
+    - wget
 
 - name: Checking for installed apps(casks)
   shell: brew cask list | grep {{ item }}
