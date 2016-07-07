@@ -10,6 +10,7 @@
     - zsh
     - byobu
     - wget
+    - vim
 
 - name: Checking for installed apps(casks)
   shell: brew cask list | grep {{ item }}
