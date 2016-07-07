@@ -10,3 +10,14 @@
     - zsh
     - byobu
 
+- name: Checking for installed apps(casks)
+  shell: brew cask list | grep {{ item }}
+  register: installed_applications
+  with_items: applications
+  ignore errors: true
+
+- name: Installing apps with brew-cask
+  shell: brew cask install {{ item }}
+  with_items: applications
+  when: item not in installed_applications.results|map(attribute='stdout')
+
