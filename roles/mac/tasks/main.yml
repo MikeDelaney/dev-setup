@@ -1,22 +1,12 @@
 ---
 - name: Installing software with homebrew
   homebrew: name={{ item }} state=present
-  with_items:
-    - git
-    - python-pip
-    - python-dev
-    - libpq-dev
-    - snappy
-    - zsh
-    - byobu
-    - wget
-    - vim
-    - postgres
+  with_items: apps
 
 - name: Checking for installed apps(casks)
   shell: brew cask list | grep {{ item }}
   register: installed_applications
-  with_items: applications
+  with_items: cask_apps
   ignore errors: true
 
 - name: Installing apps with brew-cask

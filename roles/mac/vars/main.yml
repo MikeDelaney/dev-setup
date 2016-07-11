@@ -1,3 +1,17 @@
 ---
-applications:
+apps:
+ - git
+ - python
+ - python-pip
+ - python-dev
+ - libpq-dev
+ - snappy
+ - zsh
+ - byobu
+ - wget
+ - vim
+ - postgres
+
+cask_apps:
+  - google-chrome
   - iterm2
