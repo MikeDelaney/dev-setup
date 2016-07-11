@@ -13,5 +13,6 @@ apps:
  - postgres
 
 cask_apps:
+  - atom
   - google-chrome
   - iterm2
