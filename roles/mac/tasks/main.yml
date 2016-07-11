@@ -11,6 +11,7 @@
     - byobu
     - wget
     - vim
+    - postgres
 
 - name: Checking for installed apps(casks)
   shell: brew cask list | grep {{ item }}
@@ -22,4 +23,13 @@
   shell: brew cask install {{ item }}
   with_items: applications
   when: item not in installed_applications.results|map(attribute='stdout')
+
+- name: Adding postgres to LaunchAgents
+  file:
+    src: /usr/local/opt/postgresql/*.plist
+    dest: ~/Library/LaunchAgents
+    state: link
+
+- name: Start postgres at startup
+  shell: launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
 
