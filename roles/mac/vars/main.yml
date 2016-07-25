@@ -1,18 +1,21 @@
 ---
 apps:
- - git
- - python
- - python-pip
- - python-dev
- - libpq-dev
- - snappy
- - zsh
- - byobu
- - wget
- - vim
- - postgres
+  - git
+  - python
+  - python-pip
+  - python-dev
+  - libpq-dev
+  - rabbitmq
+  - snappy
+  - zsh
+  - byobu
+  - wget
+  - vim
+  - postgres
 
 cask_apps:
   - atom
+  - franz
   - google-chrome
   - iterm2
+  - docker
