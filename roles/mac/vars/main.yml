@@ -2,6 +2,7 @@
 apps:
   - git
   - python
+  - python3
   - python-pip
   - python-dev
   - libpq-dev
