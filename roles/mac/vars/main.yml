@@ -13,6 +13,7 @@ apps:
   - wget
   - vim
   - postgres
+  - tree
 
 cask_apps:
   - atom
