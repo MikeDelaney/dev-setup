@@ -21,3 +21,5 @@ cask_apps:
   - google-chrome
   - iterm2
   - docker
+  - hex-fiend
+
