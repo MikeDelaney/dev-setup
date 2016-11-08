@@ -14,6 +14,8 @@ apps:
   - vim
   - postgres
   - tree
+  - rpm
+  - rpmbuild
 
 cask_apps:
   - atom
