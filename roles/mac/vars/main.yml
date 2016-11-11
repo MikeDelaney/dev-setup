@@ -23,4 +23,5 @@ cask_apps:
   - iterm2
   - docker
   - hex-fiend
+  - bee
 
