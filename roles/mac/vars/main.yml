@@ -24,4 +24,5 @@ cask_apps:
   - docker
   - hex-fiend
   - bee
+  - postman
 
