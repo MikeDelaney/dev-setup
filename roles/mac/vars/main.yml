@@ -15,6 +15,7 @@ apps:
   - postgres
   - tree
   - rpm
+  - gnu-tar
 
 cask_apps:
   - atom
