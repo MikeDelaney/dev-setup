@@ -4,7 +4,7 @@
   with_items:
     - virtualenv
     - virtualenvwrapper
-        
+
 - name: Setting home directory for Mac
   set_fact:
     homedir: /Users/{{ devuser }}
@@ -51,7 +51,7 @@
 
 - name: Adding vim-plug package manager
   become_user: "{{ devuser }}"
-  get_url: 
+  get_url:
     url=https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     dest={{ homedir }}/.vim/autoload/plug.vim
     backup=yes
@@ -91,4 +91,9 @@
     - { dirname: 'git', name: '.gitignore_global' }
     - { dirname: 'git', name: '.git-completion.sh' }
     - { dirname: 'git', name: '.git-prompt.sh' }
- 
+
+- name: Install fpm packaging tool
+  become_user: "{{ devuser}}"
+  gem:
+      name: fpm
+      state: present
