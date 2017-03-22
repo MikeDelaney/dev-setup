@@ -11,4 +11,8 @@
     - byobu
     - htop
     - default-jre
-
+    - ruby
+    - ruby-dev
+    - rubygems
+    - gcc
+    - make
