@@ -22,7 +22,6 @@ cask_apps:
   - franz
   - google-chrome
   - iterm2
-  - docker
   - hex-fiend
   - bee
   - postman
