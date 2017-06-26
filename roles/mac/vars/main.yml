@@ -16,6 +16,7 @@ apps:
   - tree
   - rpm
   - gnu-tar
+  - go
 
 cask_apps:
   - atom

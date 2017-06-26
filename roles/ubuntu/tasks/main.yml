@@ -17,4 +17,5 @@
     - gcc
     - make
 
+# TODO: Add install for golang
 # TODO: Add task to add ~/.local/bin to PATH for pipsi
