@@ -97,3 +97,18 @@
   gem:
       name: fpm
       state: present
+
+- name: Create dirs for Go
+  become_user: "{{ devuser }}"
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ homedir }}/Go"
+    - "{{ homedir }}/Go/src/gitub.com/MikeDelaney"
+
+- name: Download pipsi
+  get_url: https://raw.githubusercontent.com/mitsuhiko/pipsi/master/get-pipsi.py
+
+- name: Install pipsi
+  shell: python /tmp/get-pipsi.py
