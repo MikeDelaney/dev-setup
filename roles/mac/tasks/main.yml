@@ -23,3 +23,10 @@
 - name: Start postgres at startup
   shell: launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
 
+- name: Add pipsi to PATH
+  become_user: "{{ devuser }}"
+  lineinfile:
+    path: /etc/paths
+    state: present
+    line: /Users/michael.delaney/local/bin
+

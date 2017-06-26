@@ -16,3 +16,5 @@
     - rubygems
     - gcc
     - make
+
+# TODO: Add task to add ~/.local/bin to PATH for pipsi
