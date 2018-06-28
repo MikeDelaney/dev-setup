@@ -6,8 +6,6 @@ apps:
   - python-pip
   - python-dev
   - libpq-dev
-  - rabbitmq
-  - snappy
   - zsh
   - wget
   - vim
