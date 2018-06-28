@@ -9,7 +9,6 @@ apps:
   - rabbitmq
   - snappy
   - zsh
-  - byobu
   - wget
   - vim
   - postgres
@@ -19,11 +18,8 @@ apps:
   - go
 
 cask_apps:
-  - atom
-  - franz
   - google-chrome
   - iterm2
-  - hex-fiend
   - bee
   - postman
 
