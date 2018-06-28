@@ -19,12 +19,12 @@
   become_user: "{{ devuser }}"
   git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest={{ homedir }}/.oh-my-zsh
 
-- name: Creating new .zshrc
-  become_user: "{{ devuser }}"
-  copy:
-    src={{ homedir }}/.oh-my-zsh/templates/zshrc.zsh-template
-    dest={{ homedir }}/.zshrc
-    backup=yes
+# - name: Creating new .zshrc
+  # become_user: "{{ devuser }}"
+  # copy:
+    # src={{ homedir }}/.oh-my-zsh/templates/zshrc.zsh-template
+    # dest={{ homedir }}/.zshrc
+    # backup=yes
 
 - name: Setting zsh as default shell
   user: name={{ devuser }} shell=/bin/zsh
@@ -82,6 +82,7 @@
     - .bashrc
     - .vimrc
     - .bash
+    - .zshrc
 
 - name: Symlink nested dotfiles
   become_user: "{{ devuser }}"
